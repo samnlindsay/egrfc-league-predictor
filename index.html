@@ -13,6 +13,18 @@
     }
     </style>
     <script>
+        function currentTable() {
+            let standings = JSON.parse(document.getElementById("standings-data").textContent);
+
+            let table = "<table class='table table-striped'><thead class='table-dark'><tr><th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>Pts</th></tr></thead><tbody>";
+            standings.forEach(team => {
+                let row = (team.Team === "East Grinstead") ? "<tr class='table-primary' style='font-weight: bold'>" : "<tr>";
+                table += `${row}<td>${team.Team}</td><td>${team.P}</td><td>${team.W}</td><td>${team.D}</td><td>${team.L}</td><td>${team.Pts}</td></tr>`;
+            });
+            table += "</tbody></table>";
+            document.getElementById("current-table").innerHTML = table;
+        }
+
         function updateTable() {
             let fixtures = document.querySelectorAll(".fixture");
             let standings = JSON.parse(document.getElementById("standings-data").textContent);
@@ -47,6 +59,7 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => {
+            currentTable();
             updateTable();
         });
 
@@ -58,162 +71,12 @@
     <div class="row justify-items-around">
         <div class="col-4">
             <h2 class="text-center">Current Table</h2>
-            <table class="table table-striped">
-                <thead class="table-dark"><tr><td>Team</td><td>P</td><td>W</td><td>D</td><td>L</td><td>Pts</td></tr></thead>
-                <tbody>
-                    <tr><td>Old Rutlishians</td><td>17</td><td>14</td><td>0</td><td>3</td><td>70</td></tr>
-                    <tr><td>Twickenham</td><td>17</td><td>13</td><td>1</td><td>3</td><td>67</td></tr>
-                    <tr><td>Weybridge Vandals</td><td>17</td><td>12</td><td>1</td><td>4</td><td>64</td></tr>
-                    <tr><td>Cobham</td><td>17</td><td>11</td><td>1</td><td>5</td><td>62</td></tr>
-                    <tr><td>Trinity</td><td>17</td><td>11</td><td>0</td><td>6</td><td>50</td></tr>
-                    <tr><td>Eastbourne</td><td>17</td><td>7</td><td>2</td><td>8</td><td>46</td></tr>
-                    <tr><td>London Cornish</td><td>17</td><td>8</td><td>0</td><td>9</td><td>44</td>
-                    </tr><tr><td>Hove</td><td>17</td><td>8</td><td>1</td><td>8</td><td>40</td></tr>
-                    <tr><td>KCS Old Boys</td><td>17</td><td>5</td><td>0</td><td>12</td><td>32</td></tr>
-                    <tr><td>Haywards Heath</td><td>17</td><td>4</td><td>0</td><td>13</td><td>25</td></tr>
-                    <tr class="table-primary" style="font-weight: bold"><td>East Grinstead</td><td>17</td><td>3</td><td>0</td><td>14</td><td>22</td></tr>
-                    <tr><td>Old Haileyburians</td><td>17</td><td>3</td><td>0</td><td>14</td><td>22</td></tr></tbody>
-            </table>
+            <div id="current-table"></div>
         </div>
         <div class="col-4">
             <h2 class="text-center">Remaining Fixtures</h2>
             <p><em>Enter the number of league points you expect each team to win in each fixture to simulate the final table.</em></p>
             <div class="d-flex flex-column gap-2">
-                
-        <div class="row d-flex p-1" style="font-size:small; background-color: #e5e4e7; color: black; border: 1px solid black; border-radius: 5px;">
-            <h4 class="text-center">Round 18</h4>
-        <div class="fixture row col-12 d-flex align-items-center justify-content-around m-0" data-home="Cobham" data-away="KCS Old Boys">
-        <div class="col-4 text-end">Cobham</div>
-        <select class="home-score form-select-sm col-2 p-0" style="width: auto;" oninput="updateTable()">
-            <option value="0" >0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5" selected>5</option>
-        </select>
-        <select class="away-score form-select-sm col-2 p-0" style="width: auto;" oninput="updateTable()">
-            <option value="0" selected>0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5" >5</option>
-        </select>
-        <div class="col-4 text-start">KCS Old Boys</div>
-    </div>
-
-    
-        <div class="fixture row col-12 d-flex align-items-center justify-content-around m-0" data-home="East Grinstead" data-away="Eastbourne">
-        <div class="col-4 text-end"><strong>East Grinstead</strong></div>
-        <select class="home-score form-select-sm col-2 p-0" style="width: auto;" oninput="updateTable()">
-            <option value="0" selected>0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5" >5</option>
-        </select>
-        <select class="away-score form-select-sm col-2 p-0" style="width: auto;" oninput="updateTable()">
-            <option value="0" >0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5" selected>5</option>
-        </select>
-        <div class="col-4 text-start">Eastbourne</div>
-    </div>
-
-    
-        <div class="fixture row col-12 d-flex align-items-center justify-content-around m-0" data-home="Haywards Heath" data-away="Weybridge Vandals">
-        <div class="col-4 text-end">Haywards Heath</div>
-        <select class="home-score form-select-sm col-2 p-0" style="width: auto;" oninput="updateTable()">
-            <option value="0" selected>0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5" >5</option>
-        </select>
-        <select class="away-score form-select-sm col-2 p-0" style="width: auto;" oninput="updateTable()">
-            <option value="0" >0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5" selected>5</option>
-        </select>
-        <div class="col-4 text-start">Weybridge Vandals</div>
-    </div>
-
-    
-        <div class="fixture row col-12 d-flex align-items-center justify-content-around m-0" data-home="Old Haileyburians" data-away="Hove">
-        <div class="col-4 text-end">Old Haileyburians</div>
-        <select class="home-score form-select-sm col-2 p-0" style="width: auto;" oninput="updateTable()">
-            <option value="0" selected>0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5" >5</option>
-        </select>
-        <select class="away-score form-select-sm col-2 p-0" style="width: auto;" oninput="updateTable()">
-            <option value="0" >0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5" selected>5</option>
-        </select>
-        <div class="col-4 text-start">Hove</div>
-    </div>
-
-    
-        <div class="fixture row col-12 d-flex align-items-center justify-content-around m-0" data-home="Old Rutlishians" data-away="Trinity">
-        <div class="col-4 text-end">Old Rutlishians</div>
-        <select class="home-score form-select-sm col-2 p-0" style="width: auto;" oninput="updateTable()">
-            <option value="0" >0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5" selected>5</option>
-        </select>
-        <select class="away-score form-select-sm col-2 p-0" style="width: auto;" oninput="updateTable()">
-            <option value="0" selected>0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5" >5</option>
-        </select>
-        <div class="col-4 text-start">Trinity</div>
-    </div>
-
-    
-        <div class="fixture row col-12 d-flex align-items-center justify-content-around m-0" data-home="London Cornish" data-away="Twickenham">
-        <div class="col-4 text-end">London Cornish</div>
-        <select class="home-score form-select-sm col-2 p-0" style="width: auto;" oninput="updateTable()">
-            <option value="0" selected>0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5" >5</option>
-        </select>
-        <select class="away-score form-select-sm col-2 p-0" style="width: auto;" oninput="updateTable()">
-            <option value="0" >0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5" selected>5</option>
-        </select>
-        <div class="col-4 text-start">Twickenham</div>
-    </div>
-
-    
         </div>
     
         <div class="row d-flex p-1" style="font-size:small; background-color: #e5e4e7; color: black; border: 1px solid black; border-radius: 5px;">
@@ -777,10 +640,10 @@
             {"Team":"Eastbourne","P":18,"W":8,"D":2,"L":8,"Pts":50},
             {"Team":"London Cornish","P":18,"W":8,"D":0,"L":10,"Pts":45},
             {"Team":"Hove","P":18,"W":9,"D":1,"L":8,"Pts":44},
-            {"Team":"KCS Old Boys","P":17,"W":5,"D":0,"L":12,"Pts":32},
-            {"Team":"Haywards Heath","P":17,"W":4,"D":0,"L":13,"Pts":25},
-            {"Team":"<strong>East Grinstead</strong>","P":17,"W":3,"D":0,"L":14,"Pts":22},
-            {"Team":"Old Haileyburians","P":17,"W":3,"D":0,"L":14,"Pts":22}
+            {"Team":"KCS Old Boys","P":18,"W":5,"D":0,"L":13,"Pts":33},
+            {"Team":"Haywards Heath","P":18,"W":4,"D":0,"L":14,"Pts":27},
+            {"Team":"<strong>East Grinstead</strong>","P":17,"W":3,"D":0,"L":15,"Pts":23},
+            {"Team":"Old Haileyburians","P":18,"W":3,"D":0,"L":15,"Pts":22}
         ]
     </pre>
 </body>
